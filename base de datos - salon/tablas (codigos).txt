@@ -1,0 +1,38 @@
+CREATE DATABASE salon;
+USE salon;
+CREATE TABLE Cliente (
+    idCliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    preferencias TEXT
+);
+CREATE TABLE Empleado (
+    idEmpleado INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    rol VARCHAR(50) NOT NULL,
+    turno VARCHAR(50) NOT NULL
+);
+CREATE TABLE Servicio (
+    idServicio INT AUTO_INCREMENT PRIMARY KEY,
+    nombreServicio VARCHAR(100) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    duracion TIME NOT NULL
+);
+CREATE TABLE Cita (
+    idCita INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    idCliente INT,
+    idServicio INT,
+    idEmpleado INT,
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+    FOREIGN KEY (idServicio) REFERENCES Servicio(idServicio),
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado)
+);
+CREATE TABLE Informe (
+    idInforme INT AUTO_INCREMENT PRIMARY KEY,
+    tipoInforme VARCHAR(100) NOT NULL,
+    fechaGeneracion DATE NOT NULL,
+    citas TEXT -- Puede almacenar un JSON o una referencia a las citas, dependiendo de tu lógica
+);
